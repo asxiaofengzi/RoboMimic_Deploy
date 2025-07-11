@@ -1,4 +1,10 @@
 import struct
+try:
+    from .keyboard_controller import KeyboardController
+    KEYBOARD_AVAILABLE = True
+except ImportError:
+    KEYBOARD_AVAILABLE = False
+    print("Warning: pygame not available, keyboard controller disabled")
 
 
 class KeyMap:
@@ -62,7 +68,38 @@ class RemoteController:
             return self.button_released[button_id]
         return False
 
-    def get_axis_value(self, axis_id):
+    def get_axis_value(self, axis_id=None):
         """get joystick axis value"""
         return self.lx, self.rx, self.ry, self.ly
+
+
+def create_controller(controller_type="remote"):
+    """
+    创建控制器实例
+    
+    Args:
+        controller_type (str): 控制器类型，可选 "remote" 或 "keyboard"
+    
+    Returns:
+        控制器实例
+    """
+    if controller_type == "keyboard":
+        if KEYBOARD_AVAILABLE:
+            return KeyboardController()
+        else:
+            print("Keyboard controller not available, falling back to remote controller")
+            return RemoteController()
+    else:
+        return RemoteController()
+
+
+# 兼容性别名
+def get_keyboard_controller():
+    """获取键盘控制器实例"""
+    return create_controller("keyboard")
+
+
+def get_remote_controller():
+    """获取遥控器实例"""
+    return create_controller("remote")
 
