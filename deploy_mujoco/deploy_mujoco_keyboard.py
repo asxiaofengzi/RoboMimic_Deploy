@@ -166,7 +166,7 @@ if __name__ == "__main__":
                     state_cmd.skill_cmd = FSMCommand.SKILL_2
                     print("切换到武术模式")
                 if controller.is_button_released(JoystickButton.B) and controller.is_button_pressed(JoystickButton.R1):
-                    state_cmd.skill_cmd = FSMCommand.SKILL_3
+                    state_cmd.skill_cmd = FSMCommand.SKILL_me
                     print("切换到踢腿模式")
                 if controller.is_button_released(JoystickButton.Y) and controller.is_button_pressed(JoystickButton.L1):
                     state_cmd.skill_cmd = FSMCommand.SKILL_4
